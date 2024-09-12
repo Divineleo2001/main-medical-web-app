@@ -1,17 +1,39 @@
+
+import Image from "next/image";
 import BlurIn from "../magicui/blur-in";
+import { Button } from "./button";
+import { images } from "@/constants";
+import { motion } from "framer-motion";
+import BlurInButton from "../magicui/blur-in-button";
 
 export default function MedicalInitialHeader() {
+
+
   return (
-    <div className="max-w-7xl mx-auto ">
-      <div className="flex flex-col items-start">
-        <BlurIn word="Revolutionize Your" />
-        <BlurIn word="HealthCare Experience" />
+    <section className="min-h-screen mx-4 mb-10 flex mt-[64px] items-start md:hidden">
+      <div className="flex flex-col items-center justify-center space-y-10">
+        <div className="flex flex-col items-center mt-10">
+          <BlurIn
+            className="text-5xl sm:text-5xl sm:flex-1 text-center"
+            word="Revolutionize Your HealthCare Experience"
+          />
+          {/* <BlurIn className="text-3xl " word="HealthCare Experience" /> */}
+        </div>
+     
+        <div className="flex flex-1 flex-col sm:flex-row sm:justify-center gap-1 md:gap-4 ">
+          <Button variant="outline" size={"lg"} className="">
+            Get Started
+          </Button>
+          <Button size={"lg"}>Book an Appointment</Button>
+        </div>
+
+        <Image
+          className="sm:hidden "
+          width={300}
+          src={images.nurse}
+          alt="Nurse with a white background"
+        />
       </div>
-      {/* <p className="text-xl sm:text-2xl text-black mb-8 max-w-3xl">
-        Experience cutting-edge medical care, personalized attention, and
-        seamless health management with our state of the art medical institute
-      </p> */}
-      {/* <Example /> */}
-    </div>
+    </section>
   );
 }

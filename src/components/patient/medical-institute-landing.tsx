@@ -7,10 +7,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { NavigationBar } from "./NavigationBar";
-import MedicalInitialHeader from "./ui/MedicalInitialHeader";
-import { TextRevealDemo } from "./initial/TextRevealDemo";
+import { NavigationBar } from "../NavigationBar";
+import MedicalInitialHeader from "../ui/MedicalInitialHeader";
 import Image from "next/image";
+import { images } from "@/constants";
+import NavigationBarClient from "./NavigationBarClient";
 
 export function MedicalInstituteLanding() {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -25,24 +26,10 @@ export function MedicalInstituteLanding() {
     <div className="">
       {/* Navigation Bar */}
       <nav className="flex justify-around fixed top-0 w-full bg-gray-100 z-10">
-        <div className="flex justify-between items-center h-16">
-          <div className="flex-shrink-0 flex items-center">
-            <span className="text-xl font-semibold">MedInstitute</span>
-          </div>
-        </div>
-        <NavigationBar />
+        <NavigationBarClient />
       </nav>
-      <div className="flex h-screen">
-        <div className="flex-1 justify-center items-center flex ">
-          <MedicalInitialHeader />
-        </div>
 
-        <div className="flex-1 flex justify-center w-full items-center ">
-          <Image
-            src={"assets/images/"}
-          />
-        </div>
-      </div>
+     <MedicalInitialHeader />
 
       {/* Hero Section */}
       <section className="bg-primary text-primary-foreground py-16 h-screen md:py-24">
