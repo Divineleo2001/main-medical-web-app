@@ -10,6 +10,7 @@ import Link from "next/link";
 import { NavigationBar } from "./NavigationBar";
 import MedicalInitialHeader from "./ui/MedicalInitialHeader";
 import { TextRevealDemo } from "./initial/TextRevealDemo";
+import Image from "next/image";
 
 export function MedicalInstituteLanding() {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -36,7 +37,11 @@ export function MedicalInstituteLanding() {
           <MedicalInitialHeader />
         </div>
 
-        <div className="flex-1 flex justify-center w-full items-center ">image</div>
+        <div className="flex-1 flex justify-center w-full items-center ">
+          <Image
+            src={"assets/images/"}
+          />
+        </div>
       </div>
 
       {/* Hero Section */}
