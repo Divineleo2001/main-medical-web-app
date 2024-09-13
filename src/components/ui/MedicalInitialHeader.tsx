@@ -4,7 +4,6 @@ import BlurIn from "../magicui/blur-in";
 import { Button } from "./button";
 import { images } from "@/constants";
 import { motion } from "framer-motion";
-import BlurInButton from "../magicui/blur-in-button";
 
 export default function MedicalInitialHeader() {
 
@@ -17,7 +16,6 @@ export default function MedicalInitialHeader() {
             className="text-5xl sm:text-5xl sm:flex-1 text-center"
             word="Revolutionize Your HealthCare Experience"
           />
-          {/* <BlurIn className="text-3xl " word="HealthCare Experience" /> */}
         </div>
      
         <div className="flex flex-1 flex-col sm:flex-row sm:justify-center gap-1 md:gap-4 ">
