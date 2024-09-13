@@ -56,19 +56,19 @@ export default function NavigationBarClient() {
                     <AccordionContent>
                       <div className="flex flex-col space-y-2">
                         <Link
-                          href="/services/emergency"
+                          href="/emergencies"
                           className="text-sm text-gray-600 hover:text-[#0077B6]"
                         >
                           Emergency Care
                         </Link>
                         <Link
-                          href="/services/outpatient"
+                          href="/out-patient-dpt"
                           className="text-sm text-gray-600 hover:text-[#0077B6]"
                         >
                           Outpatient Services
                         </Link>
                         <Link
-                          href="/services/specialties"
+                          href=""
                           className="text-sm text-gray-600 hover:text-[#0077B6]"
                         >
                           Medical Specialties
