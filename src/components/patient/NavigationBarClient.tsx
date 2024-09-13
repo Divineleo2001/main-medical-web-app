@@ -68,7 +68,7 @@ export default function NavigationBarClient() {
                           Outpatient Services
                         </Link>
                         <Link
-                          href=""
+                          href="/specialities"
                           className="text-sm text-gray-600 hover:text-[#0077B6]"
                         >
                           Medical Specialties
@@ -191,7 +191,7 @@ export default function NavigationBarClient() {
                     Comprehensive care for non-emergency medical needs.
                   </ListItem>
                   <ListItem
-                    href="/services/specialties"
+                    href="/specialities"
                     title="Medical Specialties"
                   >
                     Expert care across various medical specializations.
