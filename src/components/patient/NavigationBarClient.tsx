@@ -181,11 +181,11 @@ export default function NavigationBarClient() {
                       </a>
                     </NavigationMenuLink>
                   </li>
-                  <ListItem href="/services/emergency" title="Emergency Care">
+                  <ListItem href="/emergencies" title="Emergency Care">
                     24/7 emergency medical services for critical conditions.
                   </ListItem>
                   <ListItem
-                    href="/services/outpatient"
+                    href="/outpatient"
                     title="Outpatient Services"
                   >
                     Comprehensive care for non-emergency medical needs.

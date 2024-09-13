@@ -1,9 +1,12 @@
-import React from 'react'
+import EmergencyComponent from "@/components/EmergencyComponent";
+import React from "react";
 
 const EmergenciesPage = () => {
   return (
-    <div>EmergenciesPage</div>
-  )
-}
+    <div>
+      <EmergencyComponent />
+    </div>
+  );
+};
 
-export default EmergenciesPage
+export default EmergenciesPage;
