@@ -10,7 +10,7 @@ interface DashboardLayoutProps {
 // Check for which layout to render based on the role present while logging in
 
 
-const role: Role = Role.Patient;
+const role: Role = Role.Admin;
 export default function DashboardLayout({
   patient,
   admin,

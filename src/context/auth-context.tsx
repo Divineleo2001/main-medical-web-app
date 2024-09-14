@@ -13,6 +13,14 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+
+
+
+
+
+
+
+
   const [authState, setAuthState] = useState<{
     token: string | null;
     authenticated: boolean;

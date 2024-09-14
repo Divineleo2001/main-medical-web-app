@@ -32,11 +32,13 @@ import { AdminAuthLogin } from "@/server/admin/auth";
 import { AdminAuthSchema } from "@/schemas/admin/auth";
 import { jwtDecode } from "jwt-decode";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/context/auth-context";
 // import { SignedInUser } from "@/server_actions/(auth)/signIn";
 // import { signInForm } from "@/inferedTypes";
 // import { signInSchema } from "@/formSchemas";
 const SignIn = () => {
   const { toast } = useToast();
+  const { authState, setAuthState } = useAuth();
 
   const router = useRouter();
   const form = useForm<AdminAuthForm>({
