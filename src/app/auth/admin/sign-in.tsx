@@ -49,7 +49,7 @@ const SignIn = () => {
       console.log(response);
 
       if (response.status == 201) {
-        console.log("success");
+
         toast({
           title: `${response.status} Success`,
           description: response.message,
@@ -62,7 +62,6 @@ const SignIn = () => {
         })
       }
 
-      console.log(response.data[0].token);
 
       axios.defaults.headers.common[
         "Authorization"
