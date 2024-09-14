@@ -23,7 +23,11 @@ import {
 } from "@/components/ui/card";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { AdminAuthForm, AdminAuthResponse } from "@/types/admin/type";
+import {
+  AdminAuthForm,
+  AdminAuthResponse,
+  JwtAuthDecodeType,
+} from "@/types/admin/type";
 import { AdminAuthLogin } from "@/server/admin/auth";
 import { AdminAuthSchema } from "@/schemas/admin/auth";
 import { jwtDecode } from "jwt-decode";
@@ -48,6 +52,8 @@ const SignIn = () => {
       const response: AdminAuthResponse = await AdminAuthLogin(values);
       console.log(response);
 
+      const decoded = jwtDecode(response.data[0].token);
+
       if (response.status == 201) {
         console.log("success");
         toast({
@@ -55,14 +61,18 @@ const SignIn = () => {
           description: response.message,
         });
       }
+
       if (response.status == 500) {
         toast({
-            title:"Error - 500",
-            description: "Internal Server Error"
-        })
+          title: "Error - 500",
+          description: "Internal Server Error",
+        });
       }
 
-      console.log(response.data[0].token);
+      const token = response.data[0].token;
+      const decodedtoken: JwtAuthDecodeType = jwtDecode(token);
+
+      console.log(decodedtoken.ROLE);
 
       axios.defaults.headers.common[
         "Authorization"
