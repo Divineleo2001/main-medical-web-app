@@ -12,7 +12,7 @@ enum Role {
   Doctor = "doctor",
 }
 
-const role: Role = Role.Patient;
+const role: Role = Role.Admin;
 export default function DashboardLayout({
   patient,
   admin,
