@@ -15,22 +15,15 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useToast } from '@/hooks/use-toast'
+import { HospitalFormSchema } from '@/schemas/admin/hospitals'
 
 
-const formSchema = z.object({
-  domainUrl: z.string().url({ message: "Please enter a valid URL" }),
-  hospitalName: z.string().min(2, { message: "Hospital name must be at least 2 characters" }),
-  hospitalAddress: z.string().min(5, { message: "Address must be at least 5 characters" }),
-  contactNumber: z.string().regex(/^\+?[1-9]\d{1,14}$/, { message: "Please enter a valid phone number" }),
-  tenantId: z.string().min(1, { message: "Tenant ID is required" }),
-  url: z.string().url({ message: "Please enter a valid URL" }),
-})
 
 export default function HospitalForm() {
 const {toast} = useToast()
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof HospitalFormSchema>>({
+    resolver: zodResolver(HospitalFormSchema),
     defaultValues: {
       domainUrl: "",
       hospitalName: "",
@@ -41,7 +34,7 @@ const {toast} = useToast()
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof HospitalFormSchema>) {
     console.log(values)
     toast({
       title: "Hospital created",
