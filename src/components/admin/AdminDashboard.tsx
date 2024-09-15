@@ -1,9 +1,19 @@
-import React from 'react'
+import Link from "next/link";
+import React from "react";
 
 const AdminDashboard = () => {
   return (
-    <div>AdminDashboard</div>
-  )
-}
+    <div>
+      <div className="flex">
+        <div>
+          Hospitals Hospitals Count
+          <Link href={"/dashboard/hospitals"}>All hospital list</Link>
+        </div>
 
-export default AdminDashboard
+        <div>Users</div>
+      </div>
+    </div>
+  );
+};
+
+export default AdminDashboard;

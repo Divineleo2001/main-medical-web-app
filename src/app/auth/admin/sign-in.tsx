@@ -32,15 +32,16 @@ import { AdminAuthLogin } from "@/server/admin/auth";
 import { AdminAuthSchema } from "@/schemas/admin/auth";
 import { jwtDecode } from "jwt-decode";
 import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/context/auth-context";
+import { useGetToken } from "@/api/admin/use-get-token";
 // import { SignedInUser } from "@/server_actions/(auth)/signIn";
 // import { signInForm } from "@/inferedTypes";
 // import { signInSchema } from "@/formSchemas";
 const SignIn = () => {
   const { toast } = useToast();
-  const { authState, setAuthState } = useAuth();
 
   const router = useRouter();
+
+  const { mutate: getAdminToken } = useGetToken();
   const form = useForm<AdminAuthForm>({
     resolver: zodResolver(AdminAuthSchema),
     defaultValues: {
@@ -50,41 +51,64 @@ const SignIn = () => {
   });
 
   const handleSubmit = async (values: AdminAuthForm) => {
-    try {
-      const response: AdminAuthResponse = await AdminAuthLogin(values);
-      console.log(response);
+    getAdminToken(
+      {
+        username: values.username,
+        password: values.password,
+      },
+      {
+        onSuccess: (data) => {
+          if (data.status == 201) {
+            toast({
+              title: `${data.status} Success`,
+              description: data.message,
+            });
+          }
+          axios.defaults.headers.common["Authorization"] = `Bearer ${data.data[0].token}`
+          router.push("/dashboard")
+        },
 
-      const decoded = jwtDecode(response.data[0].token);
-
-      if (response.status == 201) {
-        console.log("success");
-        toast({
-          title: `${response.status} Success`,
-          description: response.message,
-        });
+        onError: (error) => {
+          console.log(error);
+        },
       }
+    );
 
-      if (response.status == 500) {
-        toast({
-          title: "Error - 500",
-          description: "Internal Server Error",
-        });
-      }
+    // try {
+    //   const response: AdminAuthResponse = await AdminAuthLogin(values);
+    //   console.log(response);
 
-      const token = response.data[0].token;
-      const decodedtoken: JwtAuthDecodeType = jwtDecode(token);
+    //   const decoded = jwtDecode(response.data[0].token);
 
-      console.log(decodedtoken.ROLE);
+    //   if (response.status == 201) {
+    //     console.log("success");
+    //     toast({
+    //       title: `${response.status} Success`,
+    //       description: response.message,
+    //     });
+    //   }
 
-      axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${response.data[0].token}`;
-      //   const decoded = jwtDecode(response.)
+    //   if (response.status == 500) {
+    //     toast({
+    //       title: "Error - 500",
+    //       description: "Internal Server Error",
+    //     });
+    //   }
 
-      //   router.push("/dashboard/portal")
-    } catch (error) {
-      console.log(error);
-    }
+    //   const token = response.data[0].token;
+    //   const decodedtoken: JwtAuthDecodeType = jwtDecode(token);
+
+    //   console.log(decodedtoken.ROLE);
+
+    //   axios.defaults.headers.common[
+    //     "Authorization"
+    //   ] = `Bearer ${response.data[0].token}`;
+    //   //   const decoded = jwtDecode(response.)
+
+    //   //   router.push("/dashboard/portal")
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
   return (
     <>

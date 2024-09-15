@@ -1,8 +1,16 @@
+"use client"
+import { useGetAllHospitals } from '@/api/admin/get-hospitals'
+import AdminDashboard from '@/components/admin/AdminDashboard'
 import React from 'react'
 
 const AdminDashboardPage = () => {
+
+  
+  
   return (
-    <div>AdminDashboardPage</div>
+    <div>
+      <AdminDashboard />
+    </div>
   )
 }
 
