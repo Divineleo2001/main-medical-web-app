@@ -50,8 +50,10 @@ export function Navbar({ children,specialtyData }: { children?: React.ReactNode,
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between">
+      <div className="container px-4 sm:px-6 my-2 mx-2 lg:px-8 flex h-16 items-center justify-between">
         <div className="flex items-center">
+          {/* Mobile menu */}
+          {/* The Mobile Menu is getting triggered by the following sheet trigger api from shad cn allowing it to open a navigation */}
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="mr-2 md:hidden">
@@ -69,24 +71,15 @@ export function Navbar({ children,specialtyData }: { children?: React.ReactNode,
                     <AccordionTrigger>Our Services</AccordionTrigger>
                     <AccordionContent>
                       <div className="flex flex-col space-y-2">
-                        <Link 
-                          href="/services/emergency" 
-                          className={`text-sm ${isActive('/services/emergency') ? 'text-[#0077B6] bg-[#E1F5FE] px-2 py-1 rounded' : 'text-gray-600 hover:text-[#0077B6]'}`}
+                      {servicesInfo.map((info) => (
+                        <Link
+                          key={info.title}
+                          href={info.href}
+                          className={`text-sm ${isActive(info.href)? "text-[#0077B6] bg-[#E1F5FE] px-2 py-1 rounded" :"text-gray-600 hover:text-[#0077B6]"}`}
                         >
-                          Emergency Care
+                        {info.title}
                         </Link>
-                        <Link 
-                          href="/services/outpatient" 
-                          className={`text-sm ${isActive('/services/outpatient') ? 'text-[#0077B6] bg-[#E1F5FE] px-2 py-1 rounded' : 'text-gray-600 hover:text-[#0077B6]'}`}
-                        >
-                          Outpatient Services
-                        </Link>
-                        <Link 
-                          href="/services/specialties" 
-                          className={`text-sm ${isActive('/services/specialties') ? 'text-[#0077B6] bg-[#E1F5FE] px-2 py-1 rounded' : 'text-gray-600 hover:text-[#0077B6]'}`}
-                        >
-                          Medical Specialties
-                        </Link>
+                      ))}
                       </div>
                     </AccordionContent>
                   </AccordionItem>
@@ -101,7 +94,7 @@ export function Navbar({ children,specialtyData }: { children?: React.ReactNode,
                             className={`text-sm ${isActive(info.href) ? 'text-[#0077B6] bg-[#E1F5FE] px-2 py-1 rounded' : 'text-gray-600 hover:text-[#0077B6]'}`}
                           >
                             {info.title}
-                          </Link>
+                          </Link> 
                         ))}
                       </div>
                     </AccordionContent>
@@ -186,9 +179,12 @@ export function Navbar({ children,specialtyData }: { children?: React.ReactNode,
             </SheetContent>
           </Sheet>
           <Link href="/" className="flex items-center space-x-2">
-            <span className="hidden font-bold text-[#0077B6] md:inline-block">Hospital Name</span>
+            <span className="hidden font-bold text-[#0077B6] md:inline-block">Hospital Name haha</span>
           </Link>
         </div>
+
+        {/* Desktop View */}
+        {/* This Following part is using the content from the navigation menu from shadcn to use on the desktop view */}
         <NavigationMenu className="hidden md:flex">
           <NavigationMenuList>
             <NavigationMenuItem>
@@ -212,13 +208,14 @@ export function Navbar({ children,specialtyData }: { children?: React.ReactNode,
                       </a>
                     </NavigationMenuLink>
                   </li>
-                  <ListItem href="/services/emergency" title="Emergency Care" isActive={isActive('/services/emergency')}>
-                    24/7 emergency medical services for critical conditions.
+                  
+                  <ListItem href="/services/emergencies" title="Emergency Care" isActive={isActive('/services/emergencies')}>
+                    24/7 emergency medical services for critical conditions in mobile.
                   </ListItem>
                   <ListItem href="/services/outpatient" title="Outpatient Services" isActive={isActive('/services/outpatient')}>
                     Comprehensive care for non-emergency medical needs.
                   </ListItem>
-                  <ListItem href="/services/specialties" title="Medical Specialties" isActive={isActive('/services/specialties')}>
+                  <ListItem href="/services/specialities" title="Medical Specialties" isActive={isActive('/services/specialities')}>
                     Expert care across various medical specializations.
                   </ListItem>
                 </ul>
@@ -293,7 +290,7 @@ export function Navbar({ children,specialtyData }: { children?: React.ReactNode,
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <div className="hidden md:flex items-center space-x-2">
+          {/* <div className="hidden md:flex items-center space-x-2">
             {isLoggedIn ? (
               <Button
                 variant="ghost"
@@ -319,7 +316,7 @@ export function Navbar({ children,specialtyData }: { children?: React.ReactNode,
                 </Button>
               </>
             )}
-          </div>
+          </div> */}
         </div>
       </div>
       {children}
@@ -371,4 +368,22 @@ const patientInfo = [
     href: "/patients/billing",
     description: "Information about billing procedures and accepted insurance plans.",
   },
+]
+
+const servicesInfo = [
+  {
+    title: "Emergency Care",
+    href: "/services/emergencies",
+    description : "Emergency care for patients with life-threatening medical conditions.",
+  },
+  {
+    title : "Out Patient Services",
+    href : "/services/outpatient",
+    description : "Outpatient services for general health care.",
+  },
+  {
+    title : "Medical Specialities",
+    href : "/services/specialities",
+    description : "Expert care across various medical specialties.",
+  }
 ]

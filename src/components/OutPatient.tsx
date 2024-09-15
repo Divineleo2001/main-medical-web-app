@@ -6,16 +6,6 @@ import { Calendar, Clock, Stethoscope, Clipboard, Users, Phone } from 'lucide-re
 export default function OutPatient() {
   return (
     <div className="flex flex-col min-h-screen bg-blue-50">
-      <header className="bg-blue-600 text-white p-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold">Hospital Name</Link>
-          <nav>
-            <Link href="/outpatient" className="ml-4 hover:underline">Outpatient</Link>
-            {/* Add more nav items as needed */}
-          </nav>
-        </div>
-      </header>
-
       <main className="flex-grow">
         {/* Hero Section */}
         <section className="bg-blue-700 text-white py-12 md:py-20 px-4">
