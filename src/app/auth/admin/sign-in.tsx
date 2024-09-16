@@ -57,7 +57,7 @@ const SignIn = () => {
       const decoded = jwtDecode(response.data[0].token);
 
       if (response.status == 201) {
-        console.log("success");
+
         toast({
           title: `${response.status} Success`,
           description: response.message,
@@ -71,10 +71,12 @@ const SignIn = () => {
         });
       }
 
-      const token = response.data[0].token;
-      const decodedtoken: JwtAuthDecodeType = jwtDecode(token);
 
-      console.log(decodedtoken.ROLE);
+//       const token = response.data[0].token;
+//       const decodedtoken: JwtAuthDecodeType = jwtDecode(token);
+
+//       console.log(decodedtoken.ROLE);
+
 
       axios.defaults.headers.common[
         "Authorization"
