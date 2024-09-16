@@ -23,16 +23,22 @@ import {
 } from "@/components/ui/card";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { AdminAuthForm, AdminAuthResponse } from "@/types/admin/type";
+import {
+  AdminAuthForm,
+  AdminAuthResponse,
+  JwtAuthDecodeType,
+} from "@/types/admin/type";
 import { AdminAuthLogin } from "@/server/admin/auth";
 import { AdminAuthSchema } from "@/schemas/admin/auth";
 import { jwtDecode } from "jwt-decode";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/context/auth-context";
 // import { SignedInUser } from "@/server_actions/(auth)/signIn";
 // import { signInForm } from "@/inferedTypes";
 // import { signInSchema } from "@/formSchemas";
 const SignIn = () => {
   const { toast } = useToast();
+  const { authState, setAuthState } = useAuth();
 
   const router = useRouter();
   const form = useForm<AdminAuthForm>({
@@ -48,6 +54,8 @@ const SignIn = () => {
       const response: AdminAuthResponse = await AdminAuthLogin(values);
       console.log(response);
 
+      const decoded = jwtDecode(response.data[0].token);
+
       if (response.status == 201) {
 
         toast({
@@ -55,12 +63,19 @@ const SignIn = () => {
           description: response.message,
         });
       }
+
       if (response.status == 500) {
         toast({
-            title:"Error - 500",
-            description: "Internal Server Error"
-        })
+          title: "Error - 500",
+          description: "Internal Server Error",
+        });
       }
+
+
+//       const token = response.data[0].token;
+//       const decodedtoken: JwtAuthDecodeType = jwtDecode(token);
+
+//       console.log(decodedtoken.ROLE);
 
 
       axios.defaults.headers.common[

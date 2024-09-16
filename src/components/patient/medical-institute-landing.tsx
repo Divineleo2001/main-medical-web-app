@@ -25,9 +25,9 @@ export function MedicalInstituteLanding() {
   return (
     <div className="">
       {/* Navigation Bar */}
-      <nav className="flex justify-around fixed top-0 w-full bg-gray-100 z-10">
+      {/* <nav className="flex justify-around fixed top-0 w-full bg-gray-100 z-10">
         <NavigationBarClient />
-      </nav>
+      </nav> */}
 
      <MedicalInitialHeader />
 
