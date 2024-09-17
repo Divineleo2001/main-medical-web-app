@@ -12,7 +12,6 @@ import { Input } from "@/components/ui/input";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import {
   Card,
   CardContent,
@@ -21,94 +20,75 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
-import {
-  AdminAuthForm,
-  AdminAuthResponse,
-  JwtAuthDecodeType,
-} from "@/types/admin/type";
-import { AdminAuthLogin } from "@/server/admin/auth";
-import { AdminAuthSchema } from "@/schemas/admin/auth";
-import { jwtDecode } from "jwt-decode";
 import { useToast } from "@/hooks/use-toast";
-import { useGetToken } from "@/api/admin/use-get-token";
-// import { SignedInUser } from "@/server_actions/(auth)/signIn";
-// import { signInForm } from "@/inferedTypes";
-// import { signInSchema } from "@/formSchemas";
-const SignIn = () => {
+import { useGetAllHospitals } from "@/api/shared/get-hospitals";
+import {  LoginAuthForm } from "@/types/shared/type";
+import { LoginAuthSchema } from "@/schemas/shared/auth";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useGetUserToken } from "@/api/shared/use-get-user-token";
+
+const UserSignIn = () => {
+  const { data } = useGetAllHospitals();
+ 
+
   const { toast } = useToast();
 
   const router = useRouter();
-
-  const { mutate: getAdminToken } = useGetToken();
-  const form = useForm<AdminAuthForm>({
-    resolver: zodResolver(AdminAuthSchema),
+  const { mutate: getUserToken } = useGetUserToken();
+  const form = useForm<LoginAuthForm>({
+    resolver: zodResolver(LoginAuthSchema),
     defaultValues: {
       username: "",
       password: "",
+      hospitalId: "",
     },
   });
 
-  const handleSubmit = async (values: AdminAuthForm) => {
-    getAdminToken(
+  const handleSubmit = async (values: LoginAuthForm) => {
+    getUserToken(
       {
         username: values.username,
         password: values.password,
+        hospitalId: values.hospitalId,
       },
       {
         onSuccess: (data) => {
           if (data.status == 201) {
+            // const decoded: JwtAuthDecodeType = jwtDecode(data.data[0].token);
+
+            if (values.hospitalId) {
+              axios.defaults.headers.common["X-PrivateTenant"] =
+                values.hospitalId;
+            }
             toast({
               title: `${data.status} Success`,
               description: data.message,
             });
           }
-          axios.defaults.headers.common["Authorization"] = `Bearer ${data.data[0].token}`
-          router.push("/dashboard")
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${data.data[0].token}`;
+
+          router.push("/dashboard");
         },
 
         onError: (error) => {
-          console.log(error);
+          toast({
+            title: `Internal server Error ${error.name}`,
+            description: "Please try again ",
+            variant: "destructive",
+          });
         },
       }
     );
-
-    // try {
-    //   const response: AdminAuthResponse = await AdminAuthLogin(values);
-    //   console.log(response);
-
-    //   const decoded = jwtDecode(response.data[0].token);
-
-    //   if (response.status == 201) {
-    //     console.log("success");
-    //     toast({
-    //       title: `${response.status} Success`,
-    //       description: response.message,
-    //     });
-    //   }
-
-    //   if (response.status == 500) {
-    //     toast({
-    //       title: "Error - 500",
-    //       description: "Internal Server Error",
-    //     });
-    //   }
-
-    //   const token = response.data[0].token;
-    //   const decodedtoken: JwtAuthDecodeType = jwtDecode(token);
-
-    //   console.log(decodedtoken.ROLE);
-
-    //   axios.defaults.headers.common[
-    //     "Authorization"
-    //   ] = `Bearer ${response.data[0].token}`;
-    //   //   const decoded = jwtDecode(response.)
-
-    //   //   router.push("/dashboard/portal")
-    // } catch (error) {
-    //   console.log(error);
-    // }
   };
   return (
     <>
@@ -159,6 +139,36 @@ const SignIn = () => {
                   );
                 }}
               />
+              <FormField
+                control={form.control}
+                name="hospitalId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Hospital</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value?.toString()}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a hospital" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {data?.data.map((hospital) => (
+                          <SelectItem
+                            key={hospital.tenantId}
+                            value={hospital.tenantId.toString()}
+                          >
+                            {hospital.hospitalName}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </CardContent>
             <CardFooter>
               <Button type="submit">Submit</Button>
@@ -170,4 +180,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default UserSignIn;

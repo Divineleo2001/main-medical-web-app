@@ -6,10 +6,10 @@ import axios, { AxiosError } from "axios";
 
 
 export const AdminAuthLogin = async (values: AdminAuthForm) => {
-  const AdminAuthenticateUrl = process.env.BACKEND_URL + "/auth/token";
+  const url = process.env.BACKEND_URL + "/auth/token";
 
   try {
-    const { data } = await axios.post(AdminAuthenticateUrl, {
+    const { data } = await axios.post(url, {
       username: values.username,
       password: values.password,
     });

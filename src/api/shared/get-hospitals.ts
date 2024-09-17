@@ -1,5 +1,5 @@
 import { getAllHospitals } from '@/server/admin/hospitals';
-import { HospitalResponse } from '@/types/admin/type';
+import { HospitalResponse } from '@/types/shared/type';
 import type { AxiosError } from 'axios';
 import { createQuery } from 'react-query-kit';
 

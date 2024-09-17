@@ -31,38 +31,28 @@ export enum Role {
   none = none,
 }
 
-interface JwtAuthDecodeType {
-  ROLE: string;
-  TENANT: string;
-  sub: string;
-  iat: number;  // Issued at (timestamp)
-  exp: number;  // Expiration time (timestamp)
-}
-// export interface JwtTokenDecodeType = {
-
-// }
-
-// Hosptals type
-
-
-// Define the type for the response object
-interface Hospital {
+interface Users{
   createdBy: string;
-  createdDate: string; // Consider using Date type if you need to work with actual Date objects
+  createdDate: string;
   lastModifiedBy: string;
-  lastModifiedDate: string; // Same as above, Date type might be better
+  lastModifiedDate: string;
   id: number;
-  domainUrl: string;
-  hospitalName: string;
-  hospitalAddress: string;
-  contactNumber: string;
-  tenantId: string;
-  url: string;
+  username: string;
+  password: string;
+  gender: string;
+  userCategoryId: number;
+  email: string;
+  phoneNumber: string;
+  enabled: boolean;
+  authorities: any[]; // Assuming authorities is an array but not provided in detail
+  accountNonExpired: boolean;
+  accountNonLocked: boolean;
+  credentialsNonExpired: boolean;
 }
 
-// Define the type for the response object
-interface HospitalResponse {
+interface UserApiResponse {
   status: number;
   message: string;
-  data: Hospital[];
+  data: Users[];
 }
+

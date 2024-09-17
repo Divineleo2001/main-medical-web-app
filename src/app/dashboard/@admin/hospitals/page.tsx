@@ -1,12 +1,21 @@
 import HospitalList from "@/components/admin/hospitals/HospitalList";
-import React from "react";
+import Loading from "@/components/shared/Loading";
+import React, { Suspense } from "react";
 
 const HospitalsPage = () => {
   return (
-    <div>
-      <h1>HospitalsPage</h1>
-      <HospitalList />
-    </div>
+    <>
+      <main>
+        <div className="relative">
+          <div className="flex justify-between">
+            <h1>Hospitals</h1>
+          </div>
+            <Suspense fallback={<Loading />}>
+              <HospitalList />
+            </Suspense>
+        </div>
+      </main>
+    </>
   );
 };
 

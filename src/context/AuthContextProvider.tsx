@@ -1,10 +1,11 @@
 'use client'
 
+import { Role } from '@/types/shared/type'
 import React, { createContext, useContext, useState } from 'react'
 
 interface AuthState {
   token: string | null
-  role: string | null
+  role: Role | null
 }
 
 interface AuthContextType {
