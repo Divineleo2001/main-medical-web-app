@@ -60,7 +60,7 @@ export function Navbar({
 
   return (
     <header >
-      <div className="sticky z-50 border-gray-200 bg-white backdrop-blur supports-[backdrop-filter]:bg-white/80 top-0 container px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between mx-auto shadow-lg">
+      <div className="sticky z-50 border-gray-200 bg-white backdrop-blur  supports-[backdrop-filter]:bg-white top-0 container px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between mx-auto shadow-lg">
         <div className="flex items-center ">
           {/* Mobile menu */}
           {/* The Mobile Menu is getting triggered by the following sheet trigger api from shad cn allowing it to open a navigation */}

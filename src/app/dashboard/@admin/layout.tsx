@@ -8,10 +8,9 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    
       <Navbar>
         <div className="mx-auto px-5 my-10">{children}</div>
       </Navbar>
-    </>
   );
 }

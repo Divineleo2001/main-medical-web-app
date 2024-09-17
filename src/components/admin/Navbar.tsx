@@ -37,8 +37,8 @@ export function Navbar({ children }: { children?: React.ReactNode }) {
   const isActive = (href: string) => pathname === href;
 
   return (
-    <header >
-      <div className="sticky z-50 border-gray-200 bg-white backdrop-blur supports-[backdrop-filter]:bg-white/80 top-0 container px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between mx-auto shadow-lg">
+    <header className="w-full" >
+      <div className="w-full sticky z-50 border-gray-200 bg-white backdrop-blur supports-[backdrop-filter]:p-10 supports-[backdrop-filter]:bg-white/80 top-0 container px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between mx-auto shadow-lg">
         <div className="flex items-center ">
           {/* Mobile menu */}
           {/* The Mobile Menu is getting triggered by the following sheet trigger api from shad cn allowing it to open a navigation */}
@@ -79,10 +79,10 @@ export function Navbar({ children }: { children?: React.ReactNode }) {
                     </AccordionContent>
                   </AccordionItem>
                   <AccordionItem value="patients">
-                    <AccordionTrigger>Patient Information</AccordionTrigger>
+                    <AccordionTrigger>Additional Routes</AccordionTrigger>
                     <AccordionContent>
                       <div className="flex flex-col space-y-2">
-                        {patientInfo.map((info) => (
+                        {adminRoutes.map((info) => (
                           <Link
                             key={info.title}
                             href={info.href}
@@ -209,11 +209,11 @@ export function Navbar({ children }: { children?: React.ReactNode }) {
                     : "text-gray-600 hover:text-[#0077B6]"
                 }`}
               >
-                Patient Information
+                Additional Routes
               </NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                  {patientInfo.map((info) => (
+                  {adminRoutes.map((info) => (
                     <ListItem
                       key={info.title}
                       title={info.title}
