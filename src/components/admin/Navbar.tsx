@@ -21,41 +21,19 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Card } from "@/components/ui/card";
+import SignOut from "../shared/SignOut";
 
-interface Specialty {
-  id: number;
-  name: string;
-  href: string;
-}
-// Server action for fetching specialties
-export function Navbar({
-  children,
-  specialtyData,
-}: {
-  children?: React.ReactNode;
-  specialtyData: Specialty[];
-}) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+export function Navbar({ children }: { children?: React.ReactNode }) {
+
   const { setTheme } = useTheme();
   const pathname = usePathname();
-
-  console.log(specialtyData);
-
   const isActive = (href: string) => pathname === href;
 
   return (
@@ -72,26 +50,19 @@ export function Navbar({
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-[300px] sm:w-[400px]">
-              <SheetHeader className="my-5">
                 <SheetTitle>
-                  <Link href="/" className="flex items-center space-x-2">
-                    <span className="font-bold text-[#0077B6]">
-                      Hospital Name
-                    </span>
-                  </Link>{" "}
+                  <span className="font-bold text-[#0077B6]">Admin Portal</span>
                 </SheetTitle>
-                <SheetDescription className="text-left">
-                  Providing compassionate care and cutting-edge medical services
-                  to our community.
-                </SheetDescription>
-              </SheetHeader>
               <nav className="flex flex-col space-y-4">
+                <Link href="/" className="flex items-center space-x-2">
+                  <span className="font-bold text-[#0077B6]">Admin Portal</span>
+                </Link>
                 <Accordion type="single" collapsible className="w-full">
                   <AccordionItem value="services">
-                    <AccordionTrigger>Our Services</AccordionTrigger>
+                    <AccordionTrigger>Admin Pages</AccordionTrigger>
                     <AccordionContent>
                       <div className="flex flex-col space-y-2">
-                        {servicesInfo.map((info) => (
+                        {adminRoutes.map((info) => (
                           <Link
                             key={info.title}
                             href={info.href}
@@ -124,34 +95,6 @@ export function Navbar({
                             {info.title}
                           </Link>
                         ))}
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="specialties">
-                    <AccordionTrigger>Specialties</AccordionTrigger>
-                    <AccordionContent>
-                      <div className="flex flex-col space-y-2">
-                        {specialtyData.slice(0, 5).map((specialty) => (
-                          <Link
-                            key={specialty.id}
-                            href={specialty.href}
-                            className={`text-sm ${
-                              isActive(specialty.href)
-                                ? "text-[#0077B6] bg-[#E1F5FE] px-2 py-1 rounded"
-                                : "text-gray-600 hover:text-[#0077B6]"
-                            }`}
-                          >
-                            {specialty.name}
-                          </Link>
-                        ))}
-                        {specialtyData.length > 5 && (
-                          <Link
-                            href="/specialties"
-                            className="text-sm font-medium text-[#0077B6] hover:underline"
-                          >
-                            Show more
-                          </Link>
-                        )}
                       </div>
                     </AccordionContent>
                   </AccordionItem>
@@ -190,31 +133,8 @@ export function Navbar({
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-                {isLoggedIn ? (
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start"
-                    onClick={() => setIsLoggedIn(false)}
-                  >
-                    Log out
-                  </Button>
-                ) : (
-                  <>
-                    <Button
-                      variant="ghost"
-                      className="w-full justify-start"
-                      onClick={() => setIsLoggedIn(true)}
-                    >
-                      Sign in
-                    </Button>
-                    <Button
-                      className="w-full justify-start bg-[#FF9800] hover:bg-[#F57C00] text-white"
-                      onClick={() => setIsLoggedIn(true)}
-                    >
-                      Sign up
-                    </Button>
-                  </>
-                )}
+
+                <SignOut />
               </nav>
             </SheetContent>
           </Sheet>
@@ -232,7 +152,7 @@ export function Navbar({
             <NavigationMenuItem>
               <NavigationMenuTrigger
                 className={`${
-                  pathname.startsWith("/services")
+                  pathname.startsWith("/dashboard")
                     ? "text-[#0077B6] bg-[#E1F5FE]"
                     : "text-gray-600 hover:text-[#0077B6]"
                 }`}
@@ -258,28 +178,26 @@ export function Navbar({
                     </NavigationMenuLink>
                   </li>
 
-                  <ListItem
-                    href="/services/emergencies"
-                    title="Emergency Care"
-                    isActive={isActive("/services/emergencies")}
-                  >
-                    24/7 emergency medical services for critical conditions in
-                    mobile.
-                  </ListItem>
-                  <ListItem
-                    href="/services/outpatient"
-                    title="Outpatient Services"
-                    isActive={isActive("/services/outpatient")}
-                  >
-                    Comprehensive care for non-emergency medical needs.
-                  </ListItem>
-                  <ListItem
-                    href="/services/specialities"
-                    title="Medical Specialties"
-                    isActive={isActive("/services/specialities")}
-                  >
-                    Expert care across various medical specializations.
-                  </ListItem>
+                  {adminRoutes.map((service) => (
+                    <ListItem
+                      key={service.title}
+                      href={service.href}
+                      title={service.title}
+                      isActive={isActive(service.href)}
+                    >
+                      {service.title}
+                    </ListItem>
+                  ))}
+
+                  {/* <ListItem href="/services/emergencies" title="Emergency Care" isActive={isActive('/services/emergencies')}>
+                      24/7 emergency medical services for critical conditions in mobile.
+                    </ListItem>
+                    <ListItem href="/services/outpatient" title="Outpatient Services" isActive={isActive('/services/outpatient')}>
+                      Comprehensive care for non-emergency medical needs.
+                    </ListItem>
+                    <ListItem href="/services/specialities" title="Medical Specialties" isActive={isActive('/services/specialities')}>
+                      Expert care across various medical specializations.
+                    </ListItem> */}
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
@@ -308,32 +226,7 @@ export function Navbar({
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger
-                className={`${
-                  pathname.startsWith("/specialties")
-                    ? "text-[#0077B6] bg-[#E1F5FE]"
-                    : "text-gray-600 hover:text-[#0077B6]"
-                }`}
-              >
-                Specialties
-              </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <Card className="p-4 w-[600px]">
-                  <div className="grid grid-cols-4 gap-2">
-                    {specialtyData.map((specialty) => (
-                      <Link
-                        key={specialty.id}
-                        href={specialty.href}
-                        className="text-sm text-gray-600 hover:text-[#0077B6]"
-                      >
-                        {specialty.name}
-                      </Link>
-                    ))}
-                  </div>
-                </Card>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
+
             <NavigationMenuItem>
               <Link href="/contact" legacyBehavior passHref>
                 <NavigationMenuLink
@@ -370,33 +263,9 @@ export function Navbar({
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          {/* <div className="hidden md:flex items-center space-x-2">
-            {isLoggedIn ? (
-              <Button
-                variant="ghost"
-                onClick={() => setIsLoggedIn(false)}
-                className="text-gray-600 hover:text-[#0077B6]"
-              >
-                Log out
-              </Button>
-            ) : (
-              <>
-                <Button
-                  variant="ghost"
-                  onClick={() => setIsLoggedIn(true)}
-                  className="text-gray-600 hover:text-[#0077B6]"
-                >
-                  Sign in
-                </Button>
-                <Button 
-                  onClick={() => setIsLoggedIn(true)}
-                  className="bg-[#FF9800] hover:bg-[#F57C00] text-white"
-                >
-                  Sign up
-                </Button>
-              </>
-            )}
-          </div> */}
+          <div className="hidden md:flex items-center space-x-2">
+           
+          </div>
         </div>
       </div>
       {children}
@@ -461,21 +330,27 @@ const patientInfo = [
   },
 ];
 
-const servicesInfo = [
+const adminRoutes = [
   {
-    title: "Emergency Care",
-    href: "/services/emergencies",
+    title: "Hospitals",
+    href: "/dashboard/hospitals",
+    description: "All the tenants are listed here",
+  },
+  {
+    title: "Users",
+    href: "/dashboard/users",
+    description: "All the users for the hospital are listed here",
+  },
+   {
+    title: "Patients",
+    href: "/dashboard/patients",
     description:
-      "Emergency care for patients with life-threatening medical conditions.",
+      "Information about billing procedures and accepted insurance plans.",
   },
   {
-    title: "Out Patient Services",
-    href: "/services/outpatient",
-    description: "Outpatient services for general health care.",
-  },
-  {
-    title: "Medical Specialities",
-    href: "/services/specialities",
-    description: "Expert care across various medical specialties.",
+    title: "Billing & Insurance",
+    href: "/patients/billing",
+    description:
+      "Information about billing procedures and accepted insurance plans.",
   },
 ];

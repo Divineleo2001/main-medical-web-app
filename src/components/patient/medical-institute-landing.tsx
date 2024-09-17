@@ -23,12 +23,8 @@ export function MedicalInstituteLanding() {
   };
 
   return (
-    <div className="">
-      {/* Navigation Bar */}
-      {/* <nav className="flex justify-around fixed top-0 w-full bg-gray-100 z-10">
-        <NavigationBarClient />
-      </nav> */}
-
+    <main className="">
+   
      <MedicalInitialHeader />
 
       {/* Hero Section */}
@@ -219,6 +215,6 @@ export function MedicalInstituteLanding() {
           )}
         </div>
       </section>
-    </div>
+    </main>
   );
 }

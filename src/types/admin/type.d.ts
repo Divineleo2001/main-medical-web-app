@@ -1,5 +1,5 @@
+import { AdminAuthSchema } from "@/schemas/admin/auth";
 import * as z from "zod";
-import { AdminAuthSchema } from "./schema/admin";
 
 // admin auth response and Varibles type
 export type AdminAuthForm = z.infer<typeof AdminAuthSchema>;
@@ -31,13 +31,28 @@ export enum Role {
   none = none,
 }
 
-interface JwtAuthDecodeType {
-  ROLE: string;
-  TENANT: string;
-  sub: string;
-  iat: number;  // Issued at (timestamp)
-  exp: number;  // Expiration time (timestamp)
+interface Users{
+  createdBy: string;
+  createdDate: string;
+  lastModifiedBy: string;
+  lastModifiedDate: string;
+  id: number;
+  username: string;
+  password: string;
+  gender: string;
+  userCategoryId: number;
+  email: string;
+  phoneNumber: string;
+  enabled: boolean;
+  authorities: any[]; // Assuming authorities is an array but not provided in detail
+  accountNonExpired: boolean;
+  accountNonLocked: boolean;
+  credentialsNonExpired: boolean;
 }
-// export interface JwtTokenDecodeType = {
 
-// }
+interface UserApiResponse {
+  status: number;
+  message: string;
+  data: Users[];
+}
+
