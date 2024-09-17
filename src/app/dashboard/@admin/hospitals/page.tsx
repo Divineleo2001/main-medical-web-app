@@ -1,9 +1,22 @@
-import React from 'react'
+import HospitalList from "@/components/admin/hospitals/HospitalList";
+import Loading from "@/components/shared/Loading";
+import React, { Suspense } from "react";
 
-const HosptialPage = () => {
+const HospitalsPage = () => {
   return (
-    <div>HosptialPage</div>
-  )
-}
+    <>
+      <main>
+        <div className="relative">
+          <div className="flex justify-between">
+            <h1>Hospitals</h1>
+          </div>
+            <Suspense fallback={<Loading />}>
+              <HospitalList />
+            </Suspense>
+        </div>
+      </main>
+    </>
+  );
+};
 
-export default HosptialPage
+export default HospitalsPage;
