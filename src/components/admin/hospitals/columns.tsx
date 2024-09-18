@@ -18,10 +18,10 @@ export const columns: ColumnDef<Hospital>[] = [
   },
   {
     accessorKey: "contactNumber",
-    header: "Contact Number"
+    header: "Contact Number",
   },
   {
     accessorKey: "tenantId",
-    header: "Tenant Id"
-  }
+    header: "Tenant Id",
+  },
 ];

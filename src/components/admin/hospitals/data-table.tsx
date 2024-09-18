@@ -20,17 +20,19 @@ import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
 import { DataTablePagination } from "@/components/shared/data-table-pagination";
 import Loading from "@/components/shared/Loading";
+import { useRouter } from "next/navigation";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   isLoading: boolean;
-  openModal: () => void;}
+
+}
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  openModal,
+
   isLoading,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
@@ -40,7 +42,7 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
   });
 
-  const dataIsPresent = table.getRowModel().rows?.length
+  const dataIsPresent = table.getRowModel().rows?.length;
   return (
     <div>
       <div className="rounded-md border">
@@ -64,7 +66,7 @@ export function DataTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
-            {dataIsPresent? (
+            {dataIsPresent ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
@@ -80,7 +82,7 @@ export function DataTable<TData, TValue>({
                   ))}
                 </TableRow>
               ))
-            ) : isLoading ? 
+            ) : isLoading ? (
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
@@ -89,21 +91,20 @@ export function DataTable<TData, TValue>({
                   <Loading />
                 </TableCell>
               </TableRow>
-            : (
+            ) : (
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  <EmptyState openModal={openModal} />
+                  <EmptyState />
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
         <div className="py-4 px-2">
-
-        <DataTablePagination table={table} />
+          <DataTablePagination table={table} />
         </div>
 
         {/* <div className="flex items-center justify-end space-x-2 py-4 ">
@@ -125,12 +126,11 @@ export function DataTable<TData, TValue>({
           </Button>
         </div> */}
       </div>
-
-      
     </div>
   );
 }
-const EmptyState = ({ openModal }: { openModal: () => void }) => {
+const EmptyState = () => {
+  const router = useRouter();
   return (
     <div className="text-center">
       <h3 className="mt-2 text-sm font-semibold text-secondary-foreground">
@@ -140,12 +140,10 @@ const EmptyState = ({ openModal }: { openModal: () => void }) => {
         Get started by creating
       </p>
       <div className="mt-6">
-        <Button onClick={() => openModal()}>
-          <PlusIcon className="h-4" /> New Employees{" "}
+        <Button onClick={() => router.replace("/dashboard/hospitals/create")}>
+          <PlusIcon className="h-4" /> Create New Hospital Organisation{" "}
         </Button>
       </div>
     </div>
   );
 };
-
-

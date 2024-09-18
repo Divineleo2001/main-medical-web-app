@@ -37,6 +37,8 @@ import { useGetUserToken } from "@/api/shared/use-get-user-token";
 
 const UserSignIn = () => {
   const { data } = useGetAllHospitals();
+
+  const hospitals = data?.data || [];
  
 
   const { toast } = useToast();
@@ -155,7 +157,7 @@ const UserSignIn = () => {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {data?.data.map((hospital) => (
+                        {hospitals.map((hospital) => (
                           <SelectItem
                             key={hospital.tenantId}
                             value={hospital.tenantId.toString()}

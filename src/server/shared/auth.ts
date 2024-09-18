@@ -18,7 +18,7 @@ export const UserLoginAuth = async (values: LoginAuthForm) => {
       token: data.data[0].token,
       role: decoded.ROLE,
     });
-    await setTenant(values.hospitalId);
+    // await setTenant(values.hospitalId);
 
     return data;
   } catch (error) {

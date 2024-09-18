@@ -1,5 +1,7 @@
+"use client";
 import HospitalList from "@/components/admin/hospitals/HospitalList";
 import Loading from "@/components/shared/Loading";
+import { createHospital } from "@/server/admin/hospitals";
 import React, { Suspense } from "react";
 
 const HospitalsPage = () => {
@@ -10,9 +12,9 @@ const HospitalsPage = () => {
           <div className="flex justify-between">
             <h1>Hospitals</h1>
           </div>
-            <Suspense fallback={<Loading />}>
-              <HospitalList />
-            </Suspense>
+          <Suspense fallback={<Loading />}>
+            <HospitalList />
+          </Suspense>
         </div>
       </main>
     </>

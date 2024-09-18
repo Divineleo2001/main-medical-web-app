@@ -1,5 +1,6 @@
 import { AdminAuthSchema } from "@/schemas/admin/auth";
 import * as z from "zod";
+import { Hospital } from "../shared/type";
 
 // admin auth response and Varibles type
 export type AdminAuthForm = z.infer<typeof AdminAuthSchema>;
@@ -8,6 +9,12 @@ interface AdminAuthResponse {
   status: number;
   message: string;
   data: TokenData[];
+}
+
+interface HospitalPostResponse {
+  status: number;
+  message: string;
+  data: Hospital[];
 }
 interface TokenData {
   token: string;

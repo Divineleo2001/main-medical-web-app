@@ -1,7 +1,9 @@
+import { HospitalFormSchema } from "@/schemas/admin";
 import { LoginAuthSchema } from "@/schemas/shared/auth";
 import { z } from "zod";
 
 export type LoginAuthForm = z.infer<typeof LoginAuthSchema>;
+export type HospitalAuthForm = z.infer<typeof HospitalFormSchema>
 
 interface TokenData {
   token: string;
@@ -31,6 +33,8 @@ interface JwtAuthDecodeType {
   iat: number; // Issued at (timestamp)
   exp: number; // Expiration time (timestamp)
 }
+
+
 
 interface Hospital {
   createdBy: string;
